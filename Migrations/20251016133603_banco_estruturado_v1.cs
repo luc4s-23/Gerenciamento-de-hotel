@@ -21,7 +21,7 @@ namespace Hoteis.Migrations
                     CPF_hospede = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email_hospede = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Telefone_hospede = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Menor_idade = table.Column<bool>(type: "bit", nullable: false)
+                    Menor_idade = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {

@@ -160,3 +160,4 @@ D:\Visual Studio\Hoteis\obj\Debug\net9.0\refint\Hoteis.dll
 D:\Visual Studio\Hoteis\obj\Debug\net9.0\Hoteis.pdb
 D:\Visual Studio\Hoteis\obj\Debug\net9.0\Hoteis.genruntimeconfig.cache
 D:\Visual Studio\Hoteis\obj\Debug\net9.0\ref\Hoteis.dll
+D:\Visual Studio\Hoteis\obj\Debug\net9.0\Hoteis.sourcelink.json

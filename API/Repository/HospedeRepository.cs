@@ -25,10 +25,11 @@ namespace Hoteis.API.Repository
             return await _context.hospedes.FindAsync(id);
         }
 
-        public async Task AdicionarAsync(Hospede hospede)
+        public async Task<Hospede> AdicionarAsync(Hospede hospede)
         {
             _context.hospedes.Add(hospede);
             await _context.SaveChangesAsync();
+            return hospede;
         }
 
         public async Task Atualizarasync(Hospede hospede)
@@ -47,6 +48,12 @@ namespace Hoteis.API.Repository
 
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<Hospede?> BuscarPorCPFAsync(string cpf)
+        {
+            return await _context.hospedes.FirstOrDefaultAsync(h => h.CPF_hospede == cpf);
+            
         }
     }
 }

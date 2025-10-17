@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Hoteis.API.Service;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+
 
 namespace Hoteis.API.Controller
 {
@@ -18,15 +13,13 @@ namespace Hoteis.API.Controller
             _hospedeService = hospedeService;
         }
 
-        [HttpGet("listar-todos")]
-        public async Task<IActionResult> ListarTodos()
+        [HttpGet("listar-todos-registros")]
+        public async Task<IActionResult> ListarTodosRegistros()
         {
-            var lista = await _hospedeService.ListarTodosAsync();
-            if (lista != null || !lista.Any())
-            {
+            var todosRegistros = await _hospedeService.ListarTodosAsync();
+            if (todosRegistros == null)
                 return NotFound("Nenhum registro encontrado");
-            }
-            return Ok(lista);
+            return Ok(todosRegistros);
         }
 
 

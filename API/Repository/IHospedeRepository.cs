@@ -6,8 +6,9 @@ namespace Hoteis.API.Repository
     {
         Task<IEnumerable<Hospede>> ListarTodosAsync();
         Task<Hospede?> BuscarPorIdAsync(int id);
-        Task AdicionarAsync(Hospede hospede);
+        Task<Hospede> AdicionarAsync(Hospede hospede);
         Task Atualizarasync(Hospede hospede);
         Task DeletarAsync(Hospede hospede);
+        Task<Hospede?> BuscarPorCPFAsync(string cpf);
     }
 }

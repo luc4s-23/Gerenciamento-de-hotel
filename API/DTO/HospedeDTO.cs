@@ -1,5 +1,5 @@
-
 namespace Hoteis.API.DTO
+
 {
     public class HospedeDTO
     {

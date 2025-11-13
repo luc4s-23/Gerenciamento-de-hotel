@@ -1,7 +1,6 @@
 using Hoteis.API.DTO;
 using Hoteis.API.Model;
 using Hoteis.API.Service;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -19,7 +18,7 @@ namespace Hoteis.API.Controller
         [HttpPost("adicionar-novo-hospede")]
         public async Task<IActionResult> AddHospede(HospedeDTO dto)
         {
-            if(dto == null)
+            if (dto == null)
             {
                 return NotFound();
             }
@@ -31,7 +30,7 @@ namespace Hoteis.API.Controller
                 Telefone_hospede = dto.Telefone_hospede,
                 Menor_idade = dto.Menor_idade
             };
-            
+
             var (Status, Dados) = await _hospedeService.AdicionarHospedeAsync(novoHospede);
             return StatusCode(Status, Dados);
         }

@@ -17,26 +17,21 @@ namespace Hoteis.API.Service
         {
             _repository = repository;
         }
-        public async Task<Hospede?> AdicionarHospedeAsync(Hospede hospede)
+        public async Task<(int Status, object? Dados)> AdicionarHospedeAsync(Hospede hospede)
         {
             try
             {
-                var validacao = new HospedeValidator();
-                var resultado = validacao.Validate(hospede);
+                var validacao = await ValidarHospedeAsync(hospede);
+                if (validacao.Status != 200)
+                    return validacao;
 
-                if (!resultado.IsValid)
-                {
-                    var erros = string.Join(", ", resultado.Errors.Select(e => e.ErrorMessage));
-                    return erros;
-                }
-                
                 var novoHospede = await _repository.AdicionarAsync(hospede);
-                
+                return (201, novoHospede);
             }
             catch (Exception ex)
             {
 
-                return null;
+                return (500, $"Erro interno ao adicionar hóspede: {ex.Message}");
             }
         }
         public Task AtualizarCadastroAsync(Hospede hospede)
@@ -64,25 +59,9 @@ namespace Hoteis.API.Service
             return lista;
         }
 
-
-        //Método usado para fazer a validação dos dados no momento que for inserir algum registro(Hospede)
-        // public async Task<(int Status, object? MensagemOuObjeto)> ValidarHospedeAsync(Hospede hospede)
-        // {
-        //     if (hospede == null)
-        //         return (400, "Os dados não foram enviados");
-
-        //     if (string.IsNullOrWhiteSpace(hospede.Nome_hospede) || hospede.Nome_hospede == null)
-        //         return (400, "O nome é obrigatório");
-
-        //     if (string.IsNullOrWhiteSpace(hospede.CPF_hospede) || hospede.CPF_hospede.Length != 11)
-        //         return (400, "CPG inválido. Deve conter 11 dígitos.");
-
-        //     var existente = await _repository.BuscarPorCPFAsync(hospede.CPF_hospede);
-        //     if (existente != null)
-        //     {
-        //         return (409, "Já existe um registro com este CPF.");
-        //     }
-        //     return (200, "Validação concluída com sucesso.");
-        // }
+        public Task<(int Status, object MensagemOuObjeto)> ValidarHospedeAsync(Hospede hospede)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

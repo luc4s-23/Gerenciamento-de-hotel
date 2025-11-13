@@ -8,6 +8,7 @@ D:\Visual Studio\Hoteis\bin\Debug\net9.0\Hoteis.dll
 D:\Visual Studio\Hoteis\bin\Debug\net9.0\Hoteis.pdb
 D:\Visual Studio\Hoteis\bin\Debug\net9.0\Azure.Core.dll
 D:\Visual Studio\Hoteis\bin\Debug\net9.0\Azure.Identity.dll
+D:\Visual Studio\Hoteis\bin\Debug\net9.0\FluentValidation.dll
 D:\Visual Studio\Hoteis\bin\Debug\net9.0\Humanizer.dll
 D:\Visual Studio\Hoteis\bin\Debug\net9.0\Microsoft.Bcl.AsyncInterfaces.dll
 D:\Visual Studio\Hoteis\bin\Debug\net9.0\Microsoft.Build.Locator.dll
@@ -149,6 +150,7 @@ D:\Visual Studio\Hoteis\obj\Debug\net9.0\Hoteis.AssemblyInfo.cs
 D:\Visual Studio\Hoteis\obj\Debug\net9.0\Hoteis.csproj.CoreCompileInputs.cache
 D:\Visual Studio\Hoteis\obj\Debug\net9.0\Hoteis.MvcApplicationPartsAssemblyInfo.cs
 D:\Visual Studio\Hoteis\obj\Debug\net9.0\Hoteis.MvcApplicationPartsAssemblyInfo.cache
+D:\Visual Studio\Hoteis\obj\Debug\net9.0\Hoteis.sourcelink.json
 D:\Visual Studio\Hoteis\obj\Debug\net9.0\scopedcss\bundle\Hoteis.styles.css
 D:\Visual Studio\Hoteis\obj\Debug\net9.0\staticwebassets.build.json
 D:\Visual Studio\Hoteis\obj\Debug\net9.0\staticwebassets.build.json.cache
@@ -160,4 +162,3 @@ D:\Visual Studio\Hoteis\obj\Debug\net9.0\refint\Hoteis.dll
 D:\Visual Studio\Hoteis\obj\Debug\net9.0\Hoteis.pdb
 D:\Visual Studio\Hoteis\obj\Debug\net9.0\Hoteis.genruntimeconfig.cache
 D:\Visual Studio\Hoteis\obj\Debug\net9.0\ref\Hoteis.dll
-D:\Visual Studio\Hoteis\obj\Debug\net9.0\Hoteis.sourcelink.json

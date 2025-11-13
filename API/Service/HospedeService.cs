@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Hoteis.API.Extras;
 using Hoteis.API.Model;
 using Hoteis.API.Repository;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -16,21 +17,26 @@ namespace Hoteis.API.Service
         {
             _repository = repository;
         }
-        public async Task<(int Status, object? Dados)> AdicionarHospedeAsync(Hospede hospede)
+        public async Task<Hospede?> AdicionarHospedeAsync(Hospede hospede)
         {
             try
             {
-                var validacao = await ValidarHospedeAsync(hospede);
-                if (validacao.Status != 200)
-                    return validacao;
+                var validacao = new HospedeValidator();
+                var resultado = validacao.Validate(hospede);
 
+                if (!resultado.IsValid)
+                {
+                    var erros = string.Join(", ", resultado.Errors.Select(e => e.ErrorMessage));
+                    return erros;
+                }
+                
                 var novoHospede = await _repository.AdicionarAsync(hospede);
-                return (201, novoHospede);
+                
             }
             catch (Exception ex)
             {
 
-                return (500, $"Erro interno ao adicionar hóspede: {ex.Message}");
+                return null;
             }
         }
         public Task AtualizarCadastroAsync(Hospede hospede)
@@ -58,23 +64,25 @@ namespace Hoteis.API.Service
             return lista;
         }
 
-        public async Task<(int Status, object? MensagemOuObjeto)> ValidarHospedeAsync(Hospede hospede)
-        {
-            if (hospede == null)
-                return (400, "Os dados não foram enviados");
 
-            if (string.IsNullOrWhiteSpace(hospede.Nome_hospede))
-                return (400, "O nome é obrigatório");
+        //Método usado para fazer a validação dos dados no momento que for inserir algum registro(Hospede)
+        // public async Task<(int Status, object? MensagemOuObjeto)> ValidarHospedeAsync(Hospede hospede)
+        // {
+        //     if (hospede == null)
+        //         return (400, "Os dados não foram enviados");
 
-            if (string.IsNullOrWhiteSpace(hospede.CPF_hospede) || hospede.CPF_hospede.Length != 11)
-                return (400, "CPG inválido. Deve conter 11 dígitos.");
+        //     if (string.IsNullOrWhiteSpace(hospede.Nome_hospede) || hospede.Nome_hospede == null)
+        //         return (400, "O nome é obrigatório");
 
-            var existente = await _repository.BuscarPorCPFAsync(hospede.CPF_hospede);
-            if (existente != null)
-            {
-                return (409, "Já existe um registro com este CPF.");
-            }
-            return (200, "Validação concluída com sucesso.");
-        }
+        //     if (string.IsNullOrWhiteSpace(hospede.CPF_hospede) || hospede.CPF_hospede.Length != 11)
+        //         return (400, "CPG inválido. Deve conter 11 dígitos.");
+
+        //     var existente = await _repository.BuscarPorCPFAsync(hospede.CPF_hospede);
+        //     if (existente != null)
+        //     {
+        //         return (409, "Já existe um registro com este CPF.");
+        //     }
+        //     return (200, "Validação concluída com sucesso.");
+        // }
     }
 }

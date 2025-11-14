@@ -7,10 +7,15 @@ namespace Hoteis.API.Model
     {
         [Key]
         public int Id_quarto { get; set; }
+        [Required]
         public int Numero_quarto { get; set; }
+        public ICollection<Reserva> reservas { get; set; }
+        [Required]
         public string Tipo { get; set; } = string.Empty;
+        [Required]
         public int Capacidade { get; set; }
         [Precision(10, 2)]
+        [Required]
         public decimal Preco_quarto_diaria { get; set; }
         public string Status { get; set; } = string.Empty;
         public string Descrição { get; set; } = string.Empty; //Deverá ser usado para informar mais detalhes sobre o quarto e o que ele oferece

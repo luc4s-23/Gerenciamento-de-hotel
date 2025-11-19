@@ -61,7 +61,7 @@ namespace Hoteis.API.Service
 
         public Task<(int Status, object MensagemOuObjeto)> ValidarHospedeAsync(Hospede hospede)
         {
-            throw new NotImplementedException();
+            return Task.FromResult((Status: 200, MensagemOuObjeto: (object?)null));
         }
     }
 }

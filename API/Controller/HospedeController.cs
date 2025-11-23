@@ -1,3 +1,4 @@
+using Hoteis.API.DTO;
 using Hoteis.API.Model;
 using Hoteis.API.Service;
 using Microsoft.AspNetCore.Mvc;
@@ -14,10 +15,14 @@ namespace Hoteis.API.Controller
             _hospedeService = hospedeService;
         }
 
-        [HttpPost("novo-hospede")]
-        public async Task<IActionResult> NovoRegistro(HospedeDTO dto)
+        [HttpPost("adicionar-novo-hospede")]
+        public async Task<IActionResult> AddHospede(HospedeDTO dto)
         {
-            var hospede = new Hospede
+            if (dto == null)
+            {
+                return NotFound();
+            }
+            var novoHospede = new Hospede
             {
                 Nome_hospede = dto.Nome_hospede,
                 CPF_hospede = dto.CPF_hospede,
@@ -25,15 +30,9 @@ namespace Hoteis.API.Controller
                 Telefone_hospede = dto.Telefone_hospede,
                 Menor_idade = dto.Menor_idade
             };
-            var resultado = await _hospedeService.ValidarHospedeAsync(hospede);
 
-            return resultado.Status switch
-            {
-                200 => Ok(resultado.MensagemOuObjeto),
-                400 => BadRequest(resultado.MensagemOuObjeto),
-                409 => Conflict(resultado.MensagemOuObjeto),
-                _ => StatusCode(500, "Erro inesperado.")
-            };
+            var (Status, Dados) = await _hospedeService.AdicionarHospedeAsync(novoHospede);
+            return StatusCode(Status, Dados);
         }
 
         [HttpGet("listar-todos-registros")]

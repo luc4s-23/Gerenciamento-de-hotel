@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Hoteis.API.Extras;
 using Hoteis.API.Model;
 using Hoteis.API.Repository;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -58,23 +59,9 @@ namespace Hoteis.API.Service
             return lista;
         }
 
-        public async Task<(int Status, object? MensagemOuObjeto)> ValidarHospedeAsync(Hospede hospede)
+        public Task<(int Status, object MensagemOuObjeto)> ValidarHospedeAsync(Hospede hospede)
         {
-            if (hospede == null)
-                return (400, "Os dados não foram enviados");
-
-            if (string.IsNullOrWhiteSpace(hospede.Nome_hospede))
-                return (400, "O nome é obrigatório");
-
-            if (string.IsNullOrWhiteSpace(hospede.CPF_hospede) || hospede.CPF_hospede.Length != 11)
-                return (400, "CPG inválido. Deve conter 11 dígitos.");
-
-            var existente = await _repository.BuscarPorCPFAsync(hospede.CPF_hospede);
-            if (existente != null)
-            {
-                return (409, "Já existe um registro com este CPF.");
-            }
-            return (200, "Validação concluída com sucesso.");
+            return Task.FromResult((Status: 200, MensagemOuObjeto: (object?)null));
         }
     }
 }

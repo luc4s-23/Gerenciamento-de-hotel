@@ -69,6 +69,9 @@ namespace Hoteis.Migrations
                     b.Property<int>("Capacidade")
                         .HasColumnType("int");
 
+                    b.Property<int>("Categoria")
+                        .HasColumnType("int");
+
                     b.Property<string>("Descrição")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -76,7 +79,7 @@ namespace Hoteis.Migrations
                     b.Property<int>("Numero_quarto")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Preco_quarto_diaria")
+                    b.Property<decimal>("Preco_quarto")
                         .HasPrecision(10, 2)
                         .HasColumnType("decimal(10,2)");
 
@@ -101,14 +104,26 @@ namespace Hoteis.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id_reserva"));
 
+                    b.Property<string>("Contato_hospede")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("Data_entrada")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("Data_saida")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Hospede_ID_FK")
+                    b.Property<string>("Documento_hospede")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("HospedeId_hospede")
                         .HasColumnType("int");
+
+                    b.Property<string>("Nome_hospede")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Preco_total")
                         .HasPrecision(10, 2)
@@ -122,9 +137,7 @@ namespace Hoteis.Migrations
 
                     b.HasKey("Id_reserva");
 
-                    b.HasIndex("Hospede_ID_FK");
-
-                    b.HasIndex("Quarto_ID_FK");
+                    b.HasIndex("HospedeId_hospede");
 
                     b.ToTable("reservas");
                 });
@@ -146,6 +159,9 @@ namespace Hoteis.Migrations
                     b.Property<string>("Senha_Hash")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Tipo_user")
+                        .HasColumnType("int");
+
                     b.HasKey("Id_Usuario");
 
                     b.ToTable("usuarios");
@@ -153,29 +169,12 @@ namespace Hoteis.Migrations
 
             modelBuilder.Entity("Hoteis.API.Model.Reserva", b =>
                 {
-                    b.HasOne("Hoteis.API.Model.Hospede", "hospede")
+                    b.HasOne("Hoteis.API.Model.Hospede", null)
                         .WithMany("reservas")
-                        .HasForeignKey("Hospede_ID_FK")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Hoteis.API.Model.Quarto", "Quarto")
-                        .WithMany("reservas")
-                        .HasForeignKey("Quarto_ID_FK")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Quarto");
-
-                    b.Navigation("hospede");
+                        .HasForeignKey("HospedeId_hospede");
                 });
 
             modelBuilder.Entity("Hoteis.API.Model.Hospede", b =>
-                {
-                    b.Navigation("reservas");
-                });
-
-            modelBuilder.Entity("Hoteis.API.Model.Quarto", b =>
                 {
                     b.Navigation("reservas");
                 });

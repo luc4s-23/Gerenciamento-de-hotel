@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Hoteis.Migrations
 {
     /// <inheritdoc />
-    public partial class ConfiguraRelacoes : Migration
+    public partial class novoBD : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -36,8 +36,9 @@ namespace Hoteis.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Numero_quarto = table.Column<int>(type: "int", nullable: false),
                     Tipo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Categoria = table.Column<int>(type: "int", nullable: false),
                     Capacidade = table.Column<int>(type: "int", nullable: false),
-                    Preco_quarto_diaria = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
+                    Preco_quarto = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Descrição = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -54,7 +55,8 @@ namespace Hoteis.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome_usuario = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email_usuario = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Senha_Hash = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Senha_Hash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Tipo_user = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -67,28 +69,24 @@ namespace Hoteis.Migrations
                 {
                     Id_reserva = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Quarto_ID_FK = table.Column<int>(type: "int", nullable: false),
+                    Nome_hospede = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Contato_hospede = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Documento_hospede = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Data_entrada = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Data_saida = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Preco_total = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     Quantidade_hospedes = table.Column<int>(type: "int", nullable: false),
-                    Quarto_ID_FK = table.Column<int>(type: "int", nullable: false),
-                    Hospede_ID_FK = table.Column<int>(type: "int", nullable: false),
-                    Preco_total = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false)
+                    HospedeId_hospede = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_reservas", x => x.Id_reserva);
                     table.ForeignKey(
-                        name: "FK_reservas_hospedes_Hospede_ID_FK",
-                        column: x => x.Hospede_ID_FK,
+                        name: "FK_reservas_hospedes_HospedeId_hospede",
+                        column: x => x.HospedeId_hospede,
                         principalTable: "hospedes",
-                        principalColumn: "Id_hospede",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_reservas_quartos_Quarto_ID_FK",
-                        column: x => x.Quarto_ID_FK,
-                        principalTable: "quartos",
-                        principalColumn: "Id_quarto",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id_hospede");
                 });
 
             migrationBuilder.CreateIndex(
@@ -98,19 +96,17 @@ namespace Hoteis.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_reservas_Hospede_ID_FK",
+                name: "IX_reservas_HospedeId_hospede",
                 table: "reservas",
-                column: "Hospede_ID_FK");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_reservas_Quarto_ID_FK",
-                table: "reservas",
-                column: "Quarto_ID_FK");
+                column: "HospedeId_hospede");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "quartos");
+
             migrationBuilder.DropTable(
                 name: "reservas");
 
@@ -119,9 +115,6 @@ namespace Hoteis.Migrations
 
             migrationBuilder.DropTable(
                 name: "hospedes");
-
-            migrationBuilder.DropTable(
-                name: "quartos");
         }
     }
 }

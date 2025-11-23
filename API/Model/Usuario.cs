@@ -13,6 +13,7 @@ namespace Hoteis.API.Model
         public string? Nome_usuario { get; set; }
         public string? Email_usuario { get; set; }
         public string? Senha_Hash { get; set; }
+        public int Tipo_user { get; set; }
 
     }
 }

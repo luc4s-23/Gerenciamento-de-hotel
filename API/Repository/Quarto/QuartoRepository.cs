@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Hoteis.API.Repository
 {
-    public class QuartoRepository
+    public class QuartoRepository : IQuartoRepository
     {
         private readonly AppDbContext _context;
 
@@ -22,6 +22,11 @@ namespace Hoteis.API.Repository
         public async Task<Quarto?> BuscarPorIdAsync(int id)
         {
             return await _context.quartos.FindAsync(id);
+        }
+
+        public async Task<Quarto?> BuscarPorNumero(int Numero_quarto)
+        {
+            return await _context.quartos.FindAsync(Numero_quarto);
         }
 
         public async Task AdicionarAsync(Quarto quarto)

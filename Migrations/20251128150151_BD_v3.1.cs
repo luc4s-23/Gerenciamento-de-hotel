@@ -6,26 +6,22 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Hoteis.Migrations
 {
     /// <inheritdoc />
-    public partial class novoBD : Migration
+    public partial class BD_v31 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "hospedes",
+                name: "categorias",
                 columns: table => new
                 {
-                    Id_hospede = table.Column<int>(type: "int", nullable: false)
+                    Id_Categoria = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome_hospede = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CPF_hospede = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
-                    Email_hospede = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Telefone_hospede = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Menor_idade = table.Column<bool>(type: "bit", nullable: false)
+                    Nome_Categoria = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_hospedes", x => x.Id_hospede);
+                    table.PrimaryKey("PK_categorias", x => x.Id_Categoria);
                 });
 
             migrationBuilder.CreateTable(
@@ -36,7 +32,7 @@ namespace Hoteis.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Numero_quarto = table.Column<int>(type: "int", nullable: false),
                     Tipo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Categoria = table.Column<int>(type: "int", nullable: false),
+                    Categoria_ID_FK = table.Column<int>(type: "int", nullable: false),
                     Capacidade = table.Column<int>(type: "int", nullable: false),
                     Preco_quarto = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -45,6 +41,26 @@ namespace Hoteis.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_quartos", x => x.Id_quarto);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "reservas",
+                columns: table => new
+                {
+                    Id_reserva = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Quarto_ID_FK = table.Column<int>(type: "int", nullable: false),
+                    Nome_hospede = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Contato_hospede = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Documento_hospede = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Data_entrada = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Data_saida = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Preco_total = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
+                    Quantidade_hospedes = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_reservas", x => x.Id_reserva);
                 });
 
             migrationBuilder.CreateTable(
@@ -62,48 +78,14 @@ namespace Hoteis.Migrations
                 {
                     table.PrimaryKey("PK_usuarios", x => x.Id_Usuario);
                 });
-
-            migrationBuilder.CreateTable(
-                name: "reservas",
-                columns: table => new
-                {
-                    Id_reserva = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Quarto_ID_FK = table.Column<int>(type: "int", nullable: false),
-                    Nome_hospede = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Contato_hospede = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Documento_hospede = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Data_entrada = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Data_saida = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Preco_total = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
-                    Quantidade_hospedes = table.Column<int>(type: "int", nullable: false),
-                    HospedeId_hospede = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_reservas", x => x.Id_reserva);
-                    table.ForeignKey(
-                        name: "FK_reservas_hospedes_HospedeId_hospede",
-                        column: x => x.HospedeId_hospede,
-                        principalTable: "hospedes",
-                        principalColumn: "Id_hospede");
-                });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_hospedes_CPF_hospede",
-                table: "hospedes",
-                column: "CPF_hospede",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_reservas_HospedeId_hospede",
-                table: "reservas",
-                column: "HospedeId_hospede");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "categorias");
+
             migrationBuilder.DropTable(
                 name: "quartos");
 
@@ -112,9 +94,6 @@ namespace Hoteis.Migrations
 
             migrationBuilder.DropTable(
                 name: "usuarios");
-
-            migrationBuilder.DropTable(
-                name: "hospedes");
         }
     }
 }

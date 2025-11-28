@@ -1,8 +1,7 @@
 using Hoteis.API.Data;
 using Hoteis.API.Repository;
-using Hoteis.API.Service;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
+using Hoteis.API.Service.Quarto;
+using Microsoft.EntityFrameworkCore; // <-- ADICIONAR ESTE USING
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,8 +12,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddScoped<IHospedeRepository, HospedeRepository>();
-builder.Services.AddScoped<IHospedeService, HospedeService>();
+//builder.Services.AddScoped<IHospedeRepository, HospedeRepository>();
+//builder.Services.AddScoped<IHospedeService, HospedeService>();
+builder.Services.AddScoped<IQuartoService, QuartoService>();
+builder.Services.AddScoped<IQuartoRepository, QuartoRepository>();
 
 
 var app = builder.Build();

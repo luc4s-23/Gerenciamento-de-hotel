@@ -17,45 +17,26 @@ namespace Hoteis.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.10")
+                .HasAnnotation("ProductVersion", "9.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Hoteis.API.Model.Hospede", b =>
+            modelBuilder.Entity("Hoteis.API.Model.Categoria", b =>
                 {
-                    b.Property<int>("Id_hospede")
+                    b.Property<int>("Id_Categoria")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id_hospede"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id_Categoria"));
 
-                    b.Property<string>("CPF_hospede")
-                        .IsRequired()
-                        .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
-
-                    b.Property<string>("Email_hospede")
+                    b.Property<string>("Nome_Categoria")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Menor_idade")
-                        .HasColumnType("bit");
+                    b.HasKey("Id_Categoria");
 
-                    b.Property<string>("Nome_hospede")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Telefone_hospede")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id_hospede");
-
-                    b.HasIndex("CPF_hospede")
-                        .IsUnique();
-
-                    b.ToTable("hospedes");
+                    b.ToTable("categorias");
                 });
 
             modelBuilder.Entity("Hoteis.API.Model.Quarto", b =>
@@ -69,7 +50,7 @@ namespace Hoteis.Migrations
                     b.Property<int>("Capacidade")
                         .HasColumnType("int");
 
-                    b.Property<int>("Categoria")
+                    b.Property<int>("Categoria_ID_FK")
                         .HasColumnType("int");
 
                     b.Property<string>("Descrição")
@@ -118,9 +99,6 @@ namespace Hoteis.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("HospedeId_hospede")
-                        .HasColumnType("int");
-
                     b.Property<string>("Nome_hospede")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -136,8 +114,6 @@ namespace Hoteis.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id_reserva");
-
-                    b.HasIndex("HospedeId_hospede");
 
                     b.ToTable("reservas");
                 });
@@ -165,18 +141,6 @@ namespace Hoteis.Migrations
                     b.HasKey("Id_Usuario");
 
                     b.ToTable("usuarios");
-                });
-
-            modelBuilder.Entity("Hoteis.API.Model.Reserva", b =>
-                {
-                    b.HasOne("Hoteis.API.Model.Hospede", null)
-                        .WithMany("reservas")
-                        .HasForeignKey("HospedeId_hospede");
-                });
-
-            modelBuilder.Entity("Hoteis.API.Model.Hospede", b =>
-                {
-                    b.Navigation("reservas");
                 });
 #pragma warning restore 612, 618
         }

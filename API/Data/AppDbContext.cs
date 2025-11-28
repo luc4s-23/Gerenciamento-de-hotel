@@ -7,10 +7,10 @@ namespace Hoteis.API.Data
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
         
-        public DbSet<Hospede> hospedes { get; set; }
         public DbSet<Quarto> quartos { get; set; }
         public DbSet<Reserva> reservas { get; set; }
         public DbSet<Usuario> usuarios { get; set; }
+        public DbSet<Categoria> categorias { get; set; }
 
         // protected override void OnModelCreating(ModelBuilder modelBuilder)
         // {

@@ -1,13 +1,15 @@
-using Hoteis.API.DTO;
 
-namespace Hoteis.API.Service.Categoria
+using Hoteis.API.DTO;
+using Hoteis.API.Model;
+
+namespace Hoteis.API.Service
 {
     public interface ICategoriaService
     {
-        Task<CategoriaDto> Create(CategoriaDto dto);
-        Task<CategoriaDto> GetById(int id);
-        Task<IEnumerable<CategoriaDto>> GetAll();
-        Task<CategoriaDto> Update(CategoriaDto dto);
+        Task NovaCategoria(CategoriaDto dto);
+        Task<Categoria> GetById(int id);
+        Task<IEnumerable<Categoria>> GetAll();
+        Task<Categoria> Update(CategoriaDto dto);
         Task Delete(int id);
     }
 }

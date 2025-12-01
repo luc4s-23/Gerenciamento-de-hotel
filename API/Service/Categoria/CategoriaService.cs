@@ -1,14 +1,18 @@
 
 using Hoteis.API.DTO;
+using Hoteis.API.Repository;
+using Hoteis.API.Model;
 
-namespace Hoteis.API.Service.Categoria
+namespace Hoteis.API.Service
 {
     public class CategoriaService : ICategoriaService
     {
-        public Task<CategoriaDto> Create(CategoriaDto dto)
-        {
-            throw new NotImplementedException();
 
+        private readonly ICategoriaRepository _repository;
+
+        public CategoriaService(ICategoriaRepository repository)
+        {
+            _repository = repository;
         }
 
         public Task Delete(int id)
@@ -16,17 +20,26 @@ namespace Hoteis.API.Service.Categoria
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<CategoriaDto>> GetAll()
+        public Task<IEnumerable<Categoria>> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public Task<CategoriaDto> GetById(int id)
+        public Task<Categoria> GetById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<CategoriaDto> Update(CategoriaDto dto)
+        public async Task NovaCategoria(CategoriaDto dto)
+        {
+            var NovaCategoria = new Categoria
+            {
+                Nome_Categoria = dto.Nome_Categoria
+            };
+            await _repository.AdicionarAsync(NovaCategoria);
+        }
+
+        public Task<Categoria> Update(CategoriaDto dto)
         {
             throw new NotImplementedException();
         }

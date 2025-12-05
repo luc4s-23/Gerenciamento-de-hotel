@@ -1,43 +1,70 @@
 
-using System.Collections;
 using Hoteis.API.Data;
 using Microsoft.EntityFrameworkCore;
-using CategoriaModel = Hoteis.API.Model.Categoria;
+using Hoteis.API.Model;
 
-namespace Hoteis.API.Repository.Categoria
+namespace Hoteis.API.Repository
 {
     public class CategoriaRepository : ICategoriaRepository
     {
         private readonly AppDbContext _context;
-        public async Task AdicionarAsync(CategoriaModel categoria)
+        private readonly ILogger _logger;
+
+        public async Task AdicionarAsync(Categoria categoria)
         {
-            _context.categorias.Add(categoria);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.categorias.Add(categoria);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException dbEx)
+            {
+                _logger.LogError(dbEx, "Erro ao inserir categoria no banco de dados.");
+                throw;
+            }
         }
 
-        public async Task AtualizarAsync(CategoriaModel categoria)
+        public async Task AtualizarAsync(Categoria categoria)
         {
-            _context.categorias.Update(categoria);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.categorias.Update(categoria);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException dbEx)
+            {
+                _logger.LogError(dbEx, "Erro ao atualizar categoria no banco de dados.");
+                throw;
+            }
+
         }
 
-        public async Task<CategoriaModel> BuscarPorIdAsync(CategoriaModel categoria)
+        public async Task<Categoria> BuscarPorIdAsync(int id)
         {
-            return await _context.categorias.FindAsync(categoria.Id_Categoria);
+            return await _context.categorias.FindAsync(id);
         }
 
-        public async Task<IList> ListarTodosAsync()
+        public async Task<IEnumerable<Categoria>> ListarTodosAsync()
         {
             return await _context.categorias.ToListAsync();
         }
 
-        public async Task RemoverAsync(int id)
+        public async Task<Categoria> RemoverAsync(int id)
         {
-            var categoria = await _context.categorias.FindAsync(id);
-            if(categoria != null)
+            try
             {
-                _context.categorias.Remove(categoria);
-                await _context.SaveChangesAsync();
+                var categoria = await _context.categorias.FindAsync(id);
+                if (categoria != null)
+                {
+                    _context.categorias.Remove(categoria);
+                    await _context.SaveChangesAsync();
+                }
+                return categoria;
+            }
+            catch (DbUpdateException dbEx)
+            {
+                _logger.LogError(dbEx, "Erro ao deletar categoria no banco de dados.");
+                throw;
             }
         }
     }

@@ -9,7 +9,6 @@ namespace Hoteis.API.Service
         Task NovaCategoria(CategoriaDto dto);
         Task<Categoria> GetById(int id);
         Task<IEnumerable<Categoria>> GetAll();
-        Task<Categoria> Update(CategoriaDto dto);
-        Task Delete(int id);
+        Task<Categoria> Delete(int id);
     }
 }

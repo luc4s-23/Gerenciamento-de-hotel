@@ -1,6 +1,7 @@
 using Hoteis.API.Model;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace Hoteis.API.Data
 {
     public class AppDbContext : DbContext

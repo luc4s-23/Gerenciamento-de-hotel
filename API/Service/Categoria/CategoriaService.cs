@@ -9,39 +9,75 @@ namespace Hoteis.API.Service
     {
 
         private readonly ICategoriaRepository _repository;
+        private readonly ILogger<CategoriaService> _logger;
 
-        public CategoriaService(ICategoriaRepository repository)
+
+        public CategoriaService(ICategoriaRepository repository, ILogger<CategoriaService> logger)
         {
             _repository = repository;
+            _logger = logger;
         }
 
-        public Task Delete(int id)
+        public async Task<Categoria> Delete(int id)
         {
-            throw new NotImplementedException();
+            if (id <= 0)
+            {
+                throw new ArgumentException("O ID deve ser maior que zero.", nameof(id));
+            }
+
+            var categoria = await _repository.BuscarPorIdAsync(id);
+
+            if (categoria == null) throw new KeyNotFoundException($"Categoria com ID {id} não encontrado");
+
+            var categoriaDeletar = await _repository.RemoverAsync(id);
+            
+            return categoriaDeletar;
         }
 
-        public Task<IEnumerable<Categoria>> GetAll()
+        public async Task<IEnumerable<Categoria>> GetAll()
         {
-            throw new NotImplementedException();
+            var lista = await _repository.ListarTodosAsync();
+            if (lista == null || !lista.Any())
+            {
+                return null;
+            }
+            return lista;
         }
 
-        public Task<Categoria> GetById(int id)
+        public async Task<Categoria> GetById(int id)
         {
-            throw new NotImplementedException();
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            var categoria = await _repository.BuscarPorIdAsync(id);
+            return categoria;
         }
 
         public async Task NovaCategoria(CategoriaDto dto)
         {
-            var NovaCategoria = new Categoria
+            if (dto == null)
             {
-                Nome_Categoria = dto.Nome_Categoria
-            };
-            await _repository.AdicionarAsync(NovaCategoria);
-        }
+                throw new ArgumentNullException(nameof(dto));
+            }
+            if (string.IsNullOrWhiteSpace(dto.Nome_Categoria))
+            {
+                throw new ArgumentException("O nome da categoria é obrigatório", nameof(dto.Nome_Categoria));
+            }
 
-        public Task<Categoria> Update(CategoriaDto dto)
-        {
-            throw new NotImplementedException();
+            try
+            {
+                var NovaCategoria = new Categoria
+                {
+                    Nome_Categoria = dto.Nome_Categoria.Trim()
+                };
+                await _repository.AdicionarAsync(NovaCategoria);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro inesperado ao criar nova categoria");
+                throw;
+            }
         }
     }
 }

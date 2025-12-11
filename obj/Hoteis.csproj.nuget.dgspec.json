@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Visual Studio\\Hoteis\\Hoteis.csproj": {}
+    "C:\\Users\\Coquinha\\Documents\\arquivos de Dev\\Projetos\\VSCode.Projetos\\Gerenciamento-de-hotel\\Hoteis.csproj": {}
   },
   "projects": {
-    "D:\\Visual Studio\\Hoteis\\Hoteis.csproj": {
+    "C:\\Users\\Coquinha\\Documents\\arquivos de Dev\\Projetos\\VSCode.Projetos\\Gerenciamento-de-hotel\\Hoteis.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Visual Studio\\Hoteis\\Hoteis.csproj",
+        "projectUniqueName": "C:\\Users\\Coquinha\\Documents\\arquivos de Dev\\Projetos\\VSCode.Projetos\\Gerenciamento-de-hotel\\Hoteis.csproj",
         "projectName": "Hoteis",
-        "projectPath": "D:\\Visual Studio\\Hoteis\\Hoteis.csproj",
-        "packagesPath": "C:\\Users\\lucas\\.nuget\\packages\\",
-        "outputPath": "D:\\Visual Studio\\Hoteis\\obj\\",
+        "projectPath": "C:\\Users\\Coquinha\\Documents\\arquivos de Dev\\Projetos\\VSCode.Projetos\\Gerenciamento-de-hotel\\Hoteis.csproj",
+        "packagesPath": "C:\\Users\\Coquinha\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Coquinha\\Documents\\arquivos de Dev\\Projetos\\VSCode.Projetos\\Gerenciamento-de-hotel\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\lucas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Coquinha\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -95,7 +95,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -1,11 +1,10 @@
-using System.Collections;
 using Hoteis.API.Data;
 using Hoteis.API.Model;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hoteis.API.Repository
 {
-    public class ReservaRepository
+    public class ReservaRepository : IReservaRepository
     {
         private readonly AppDbContext _context;
 
@@ -13,7 +12,8 @@ namespace Hoteis.API.Repository
         {
             _context = context;
         }
-        public async Task<IList> ListarTodosAsync()
+
+        public async Task<IEnumerable<Reserva>> ListarTodosAsync()
         {
             return await _context.reservas.ToListAsync();
         }
@@ -37,14 +37,11 @@ namespace Hoteis.API.Repository
 
         public async Task DeletarAsync(int id)
         {
-            var deletado = await BuscarPorIdAsync(id);
+            var reserva_deletado = await _context.reservas.FindAsync(id);
+            _context.reservas.Remove(reserva_deletado);
 
-            if (deletado != null)
-            {
-                _context.reservas.Remove(deletado);
+            await _context.SaveChangesAsync();
 
-                await _context.SaveChangesAsync();
-            }
         }
     }
 }

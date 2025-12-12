@@ -1,12 +1,11 @@
+
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 
-namespace Hoteis.API.Model
+namespace Hoteis.API.DTO
 {
-    public class Reserva
+    public class ReservaDTO
     {
-        [Key]
-        public int Id_reserva { get; set; }
         public int Quarto_ID_FK { get; set; }
         [Required]
         public string Nome_hospede { get; set; }

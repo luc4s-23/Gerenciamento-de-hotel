@@ -8,7 +8,13 @@ namespace Hoteis.API.Repository
     public class CategoriaRepository : ICategoriaRepository
     {
         private readonly AppDbContext _context;
-        private readonly ILogger _logger;
+        private readonly ILogger<CategoriaRepository> _logger;
+
+        public CategoriaRepository(AppDbContext context, ILogger<CategoriaRepository> logger)
+        {
+            _context = context;
+            _logger = logger;
+        }
 
         public async Task AdicionarAsync(Categoria categoria)
         {

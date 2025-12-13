@@ -8,6 +8,6 @@ namespace Hoteis.API.Model
         [Key]
         public int Id_Categoria { get; set; }
 
-        public string Nome_Categoria { get; set; } = string.Empty;
+        public string? Nome_Categoria { get; set; }
     }
 }

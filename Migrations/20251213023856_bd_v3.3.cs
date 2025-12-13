@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Hoteis.Migrations
 {
     /// <inheritdoc />
-    public partial class BD_v31 : Migration
+    public partial class bd_v33 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,7 +17,7 @@ namespace Hoteis.Migrations
                 {
                     Id_Categoria = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome_Categoria = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Nome_Categoria = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -31,12 +31,11 @@ namespace Hoteis.Migrations
                     Id_quarto = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Numero_quarto = table.Column<int>(type: "int", nullable: false),
-                    Tipo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Categoria_ID_FK = table.Column<int>(type: "int", nullable: false),
                     Capacidade = table.Column<int>(type: "int", nullable: false),
                     Preco_quarto = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Descrição = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Descrição = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

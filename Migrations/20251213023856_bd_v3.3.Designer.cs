@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hoteis.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251128150151_BD_v3.1")]
-    partial class BD_v31
+    [Migration("20251213023856_bd_v3.3")]
+    partial class bd_v33
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,7 +34,6 @@ namespace Hoteis.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id_Categoria"));
 
                     b.Property<string>("Nome_Categoria")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id_Categoria");
@@ -57,7 +56,6 @@ namespace Hoteis.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Descrição")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Numero_quarto")
@@ -68,11 +66,6 @@ namespace Hoteis.Migrations
                         .HasColumnType("decimal(10,2)");
 
                     b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Tipo")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id_quarto");

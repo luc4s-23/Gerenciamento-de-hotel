@@ -36,12 +36,7 @@ namespace Hoteis.API.Service
 
         public async Task<IEnumerable<Categoria>> GetAll()
         {
-            var lista = await _repository.ListarTodosAsync();
-            if (lista == null || !lista.Any())
-            {
-                return null;
-            }
-            return lista;
+            return await _repository.ListarTodosAsync();
         }
 
         public async Task<Categoria> GetById(int id)

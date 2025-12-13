@@ -1,5 +1,6 @@
 using Hoteis.API.Data;
 using Hoteis.API.Repository;
+using Hoteis.API.Service;
 using Hoteis.API.Service.Quarto;
 using Microsoft.EntityFrameworkCore; // <-- ADICIONAR ESTE USING
 
@@ -14,9 +15,15 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(buil
 
 //builder.Services.AddScoped<IHospedeRepository, HospedeRepository>();
 //builder.Services.AddScoped<IHospedeService, HospedeService>();
+
 builder.Services.AddScoped<IQuartoService, QuartoService>();
 builder.Services.AddScoped<IQuartoRepository, QuartoRepository>();
 
+builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
+builder.Services.AddScoped<ICategoriaService, CategoriaService>();
+
+builder.Services.AddScoped<IReservaRepository, ReservaRepository>();
+builder.Services.AddScoped<IReservaService, ReservaService>();
 
 var app = builder.Build();
 

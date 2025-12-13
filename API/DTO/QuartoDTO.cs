@@ -8,7 +8,6 @@ namespace Hoteis.API.DTO
         [Required]
         public int Numero_quarto { get; set; }
         [Required]
-        public string Tipo { get; set; } = string.Empty;
         public int Categoria_ID_FK { get; set; }
         [Required]
         public int Capacidade { get; set; }

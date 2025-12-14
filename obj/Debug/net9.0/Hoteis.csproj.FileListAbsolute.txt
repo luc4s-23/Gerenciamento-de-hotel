@@ -8,7 +8,6 @@ C:\Users\Coquinha\Documents\arquivos de Dev\Projetos\VSCode.Projetos\Gerenciamen
 C:\Users\Coquinha\Documents\arquivos de Dev\Projetos\VSCode.Projetos\Gerenciamento-de-hotel\bin\Debug\net9.0\Hoteis.pdb
 C:\Users\Coquinha\Documents\arquivos de Dev\Projetos\VSCode.Projetos\Gerenciamento-de-hotel\bin\Debug\net9.0\Azure.Core.dll
 C:\Users\Coquinha\Documents\arquivos de Dev\Projetos\VSCode.Projetos\Gerenciamento-de-hotel\bin\Debug\net9.0\Azure.Identity.dll
-C:\Users\Coquinha\Documents\arquivos de Dev\Projetos\VSCode.Projetos\Gerenciamento-de-hotel\bin\Debug\net9.0\FluentValidation.dll
 C:\Users\Coquinha\Documents\arquivos de Dev\Projetos\VSCode.Projetos\Gerenciamento-de-hotel\bin\Debug\net9.0\Humanizer.dll
 C:\Users\Coquinha\Documents\arquivos de Dev\Projetos\VSCode.Projetos\Gerenciamento-de-hotel\bin\Debug\net9.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\Coquinha\Documents\arquivos de Dev\Projetos\VSCode.Projetos\Gerenciamento-de-hotel\bin\Debug\net9.0\Microsoft.Build.Locator.dll

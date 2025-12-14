@@ -49,5 +49,14 @@ namespace Hoteis.API.Controllers
             });
             return Ok(dto);
         }
+        [HttpDelete("deletar-categoria{id}")]
+        public async Task<IActionResult> ApagarCategoria([FromRoute]int id){
+            if(id == null)
+            {
+                return NotFound();
+            }
+            var deletar_Categoria = await _service.Delete(id);
+            return Ok(deletar_Categoria);
+        }
     }
 }

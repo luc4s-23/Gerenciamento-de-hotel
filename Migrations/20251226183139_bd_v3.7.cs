@@ -6,36 +6,23 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Hoteis.Migrations
 {
     /// <inheritdoc />
-    public partial class bd_v33 : Migration
+    public partial class bd_v37 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "categorias",
-                columns: table => new
-                {
-                    Id_Categoria = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome_Categoria = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_categorias", x => x.Id_Categoria);
-                });
-
             migrationBuilder.CreateTable(
                 name: "quartos",
                 columns: table => new
                 {
                     Id_quarto = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Numero_quarto = table.Column<int>(type: "int", nullable: false),
-                    Categoria_ID_FK = table.Column<int>(type: "int", nullable: false),
+                    Numero_quarto = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    categoria = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Capacidade = table.Column<int>(type: "int", nullable: false),
                     Preco_quarto = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Descrição = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Descricao = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -53,7 +40,7 @@ namespace Hoteis.Migrations
                     Contato_hospede = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Documento_hospede = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Data_entrada = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Data_saida = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Data_saida = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Preco_total = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
                     Quantidade_hospedes = table.Column<int>(type: "int", nullable: false)
                 },
@@ -82,9 +69,6 @@ namespace Hoteis.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "categorias");
-
             migrationBuilder.DropTable(
                 name: "quartos");
 

@@ -6,15 +6,15 @@ namespace Hoteis.API.DTO
     public class QuartoDTO
     {
         [Required]
-        public int Numero_quarto { get; set; }
+        public string? Numero_quarto { get; set; }
         [Required]
-        public int Categoria_ID_FK { get; set; }
+        public string? categoria { get; set; }
         [Required]
-        public int Capacidade { get; set; }
+        public int? Capacidade { get; set; }
         [Precision(10, 2)]
         [Required]
-        public decimal Preco_quarto { get; set; }
-        public string Status { get; set; } = string.Empty;
-        public string Descrição { get; set; } = string.Empty;
+        public decimal? Preco_quarto { get; set; }
+        public string? Status { get; set; } = string.Empty;
+        public string? Descricao { get; set; } = string.Empty;
     }
 }

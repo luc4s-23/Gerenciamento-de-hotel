@@ -7,6 +7,7 @@ namespace Hoteis.API.Model
     {
         [Key]
         public int Id_reserva { get; set; }
+        [Required]
         public int Quarto_ID_FK { get; set; }
         [Required]
         public string Nome_hospede { get; set; }
@@ -16,7 +17,7 @@ namespace Hoteis.API.Model
         public string Documento_hospede { get; set; }
         [Required]
         public DateTime Data_entrada { get; set; }
-        public DateTime Data_saida { get; set; }
+        public DateTime? Data_saida { get; set; }
         [Precision(10, 2)]
         public decimal Preco_total { get; set; }
         public int Quantidade_hospedes { get; set; }

@@ -1,4 +1,3 @@
-using System.Collections;
 using Hoteis.API.Data;
 using Hoteis.API.Model;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +13,7 @@ namespace Hoteis.API.Repository
             _context = context;
         }
 
-        public async Task<IList> ListarTodosAsync()
+        public async Task<IEnumerable<Quarto>> ListarTodosAsync()
         {
             return await _context.quartos.ToListAsync();
         }
@@ -24,7 +23,7 @@ namespace Hoteis.API.Repository
             return await _context.quartos.FindAsync(id);
         }
 
-        public async Task<Quarto?> BuscarPorNumero(int Numero_quarto)
+        public async Task<Quarto?> BuscarPorNumero(string Numero_quarto)
         {
             return await _context.quartos.FindAsync(Numero_quarto);
         }

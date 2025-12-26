@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hoteis.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251213023856_bd_v3.3")]
-    partial class bd_v33
+    [Migration("20251226183139_bd_v3.7")]
+    partial class bd_v37
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,22 +24,6 @@ namespace Hoteis.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("Hoteis.API.Model.Categoria", b =>
-                {
-                    b.Property<int>("Id_Categoria")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id_Categoria"));
-
-                    b.Property<string>("Nome_Categoria")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id_Categoria");
-
-                    b.ToTable("categorias");
-                });
 
             modelBuilder.Entity("Hoteis.API.Model.Quarto", b =>
                 {
@@ -52,20 +36,22 @@ namespace Hoteis.Migrations
                     b.Property<int>("Capacidade")
                         .HasColumnType("int");
 
-                    b.Property<int>("Categoria_ID_FK")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Descrição")
+                    b.Property<string>("Descricao")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Numero_quarto")
-                        .HasColumnType("int");
+                    b.Property<string>("Numero_quarto")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Preco_quarto")
                         .HasPrecision(10, 2)
                         .HasColumnType("decimal(10,2)");
 
                     b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("categoria")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id_quarto");
@@ -88,7 +74,7 @@ namespace Hoteis.Migrations
                     b.Property<DateTime>("Data_entrada")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("Data_saida")
+                    b.Property<DateTime?>("Data_saida")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Documento_hospede")

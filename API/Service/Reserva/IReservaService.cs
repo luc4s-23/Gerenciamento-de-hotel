@@ -8,7 +8,7 @@ namespace Hoteis.API.Service
         Task<IEnumerable<Reserva>> GetAllAsync();
         Task<Reserva> GetByIdAsync(int id);
         Task<Reserva> CreateAsync(ReservaDTO dto);
-        Task<Reserva> UpdateAsync(ReservaDTO dto);
+        Task<Reserva> UpdateAsync(int id, ReservaDTO dto);
         Task DeleteAsync(int id);
     }
 }

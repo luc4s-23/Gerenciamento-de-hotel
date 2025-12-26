@@ -23,3 +23,5 @@
 //         public ICollection<Reserva> reservas { get; set; }
 //     }
 // }
+
+//Classe inoperante

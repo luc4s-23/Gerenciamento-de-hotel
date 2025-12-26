@@ -1,6 +1,6 @@
 
 using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore; 
 
 namespace Hoteis.API.DTO
 {

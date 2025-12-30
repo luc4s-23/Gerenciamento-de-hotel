@@ -1,6 +1,3 @@
-
-using System.Collections;
-using Hoteis.API.DTO;
 using Hoteis.API.Model;
 
 namespace Hoteis.API.Repository

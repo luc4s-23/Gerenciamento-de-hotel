@@ -17,7 +17,7 @@ namespace Hoteis.API.Model
         public string Documento_hospede { get; set; }
         [Required]
         public DateTime Data_entrada { get; set; }
-        public DateTime? Data_saida { get; set; }
+        public DateTime? Data_saida { get; set; } = null;
         [Precision(10, 2)]
         public decimal Preco_total { get; set; }
         public int Quantidade_hospedes { get; set; }

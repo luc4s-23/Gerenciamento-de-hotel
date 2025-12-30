@@ -18,5 +18,10 @@ namespace Hoteis.API.Model
         public decimal Preco_quarto { get; set; }
         public string? Status { get; set; }
         public string? Descricao { get; set; } 
+
+        public Quarto()
+        {
+            Status = "Disponível";
+        }
     }
 }

@@ -7,54 +7,55 @@ namespace Hoteis.API.Service
     public class ReservaService : IReservaService
     {
         private readonly IReservaRepository _repository;
+        private readonly IQuartoRepository _quartoRepository;
 
-        public ReservaService(IReservaRepository repository)
+        public ReservaService(IReservaRepository repository, IQuartoRepository quartoRepository)
         {
             _repository = repository;
+            _quartoRepository = quartoRepository;
         }
 
-        public async Task<Reserva> CreateAsync(ReservaDTO dto)
+        public async Task<Reserva> CreateAsync(ReservaDTO dto, int quarto_id_fk)
         {
             if (dto == null)
-            {
-                throw new ArgumentNullException("Informe todos os dados necessários", nameof(dto));
-            }
+                throw new ArgumentNullException(nameof(dto));
 
-            /*
-                Implementar uma verificação do Número do quarto, se o mesmo já existe e se já esta reservado ou não!!!
-                
-            if (string.IsNullOrEmpty(dto.Numero_quarto)) // Adicione Numero_quarto ao DTO se necessário
-            {
-                throw new ArgumentException("Número do quarto é obrigatório");
-            }
+            if (quarto_id_fk <= 0)
+                throw new ArgumentException("ID do quarto inválido.", nameof(quarto_id_fk));
 
-            // Cheque se o quarto existe e está disponível
-            var quartoExistente = await _repositoryQuarto.BuscarPorNumeroAsync(dto.Numero_quarto); // Assuma um repositório para Quarto
-            if (quartoExistente == null)
-            {
-                throw new KeyNotFoundException($"Quarto com número {dto.Numero_quarto} não encontrado");
-            }
-            if (quartoExistente.Status != "Disponivel") // Assuma um enum ou string para status
-            {
-                throw new InvalidOperationException($"Quarto {dto.Numero_quarto} já está reservado ou indisponível");
-            }
-            */
+            if (!dto.Preco_total.HasValue)
+                throw new ArgumentException("Preço total é obrigatório.");
+
+            if (!dto.Quantidade_hospedes.HasValue)
+                throw new ArgumentException("Quantidade de hóspedes é obrigatória.");
+
+            var quarto = await _quartoRepository.BuscarPorIdAsync(quarto_id_fk);
+
+            if (quarto == null)
+                throw new KeyNotFoundException($"Quarto com ID {quarto_id_fk} não encontrado.");
+
+            if (quarto.Status == "Ocupado")
+                throw new InvalidOperationException("Quarto já está ocupado.");
 
             var reserva = new Reserva
             {
+                Quarto_ID_FK = quarto_id_fk,
                 Nome_hospede = dto.Nome_hospede,
                 Contato_hospede = dto.Contato_hospede,
                 Documento_hospede = dto.Documento_hospede,
                 Data_entrada = DateTime.Now,
-                Data_saida = null,
                 Preco_total = dto.Preco_total.Value,
                 Quantidade_hospedes = dto.Quantidade_hospedes.Value
             };
 
-            //Tratar o status do quarto BEM AQUI no momento que for efetuada a reserva!!!
+            quarto.Status = "Ocupado";
+
             await _repository.AdicionarAsync(reserva);
+            await _quartoRepository.AtualizarAsync(quarto);
+
             return reserva;
         }
+
         public async Task DeleteAsync(int id)
         {
             if (id <= 0)

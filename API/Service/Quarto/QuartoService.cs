@@ -37,7 +37,6 @@ namespace Hoteis.API.Service
                 Numero_quarto = dto.Numero_quarto,
                 categoria = dto.categoria,
                 Preco_quarto = dto.Preco_quarto.Value,
-                Status = dto.Status, // Se não for informado, assume false ou true como default
                 Capacidade = dto.Capacidade.Value,
                 Descricao = dto.Descricao
             };
@@ -96,10 +95,6 @@ namespace Hoteis.API.Service
             if (dto.Preco_quarto.HasValue) // Para tipos numéricos nullable, como decimal? ou int?
             {
                 quartoExistente.Preco_quarto = dto.Preco_quarto.Value;
-            }
-            if (dto.Status != null)
-            {
-                quartoExistente.Status = dto.Status;
             }
             if (dto.Capacidade.HasValue)
             {

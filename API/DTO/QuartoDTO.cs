@@ -14,7 +14,7 @@ namespace Hoteis.API.DTO
         [Precision(10, 2)]
         [Required]
         public decimal? Preco_quarto { get; set; }
-        public string? Status { get; set; } = string.Empty;
         public string? Descricao { get; set; } = string.Empty;
+
     }
 }

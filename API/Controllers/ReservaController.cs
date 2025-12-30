@@ -14,14 +14,14 @@ namespace Hoteis.API.Controllers
             _service = service;
         }
 
-        [HttpPost("Nova-reserva")]
-        public async Task<IActionResult> NovaReservaAsync([FromBody] ReservaDTO dto)
+        [HttpPost("Nova-reserva/{Quarto_ID_FK}")]
+        public async Task<IActionResult> NovaReservaAsync([FromBody] ReservaDTO dto, [FromRoute]int Quarto_ID_FK)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            await _service.CreateAsync(dto);
+            await _service.CreateAsync(dto, Quarto_ID_FK);
             return Ok(dto);
         }
 

@@ -1,6 +1,6 @@
 
 using System.ComponentModel.DataAnnotations;
-using Microsoft.EntityFrameworkCore; 
+using Microsoft.EntityFrameworkCore;
 
 namespace Hoteis.API.DTO
 {
@@ -12,10 +12,8 @@ namespace Hoteis.API.DTO
         public string? Contato_hospede { get; set; }
         [Required]
         public string? Documento_hospede { get; set; }
-        [Required]
-        public DateTime? Data_entrada { get; set; }
-        [Precision(10, 2)]
-        public decimal? Preco_total { get; set; }
         public int? Quantidade_hospedes { get; set; }
+        [Required]
+        public int Quantidade_diarias { get; set; }
     }
 }

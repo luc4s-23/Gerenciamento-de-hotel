@@ -1,4 +1,5 @@
 using Hoteis.API.DTO;
+using Hoteis.API.Model;
 using Hoteis.API.Service;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,7 +16,7 @@ namespace Hoteis.API.Controllers
         }
 
         [HttpPost("Nova-reserva/{Quarto_ID_FK}")]
-        public async Task<IActionResult> NovaReservaAsync([FromBody] ReservaDTO dto, [FromRoute]int Quarto_ID_FK)
+        public async Task<IActionResult> NovaReservaAsync([FromBody] ReservaDTO dto, [FromRoute] int Quarto_ID_FK)
         {
             if (!ModelState.IsValid)
             {
@@ -25,5 +26,10 @@ namespace Hoteis.API.Controllers
             return Ok(dto);
         }
 
+        [HttpGet("Buscar-reservas")]
+        public async Task<IEnumerable<Reserva>> BuscarTodosAsync()
+        {
+            return await _service.GetAllAsync();
+        }
     }
 }

@@ -23,8 +23,8 @@ namespace Hoteis.API.Service
             if (quarto_id_fk <= 0)
                 throw new ArgumentException("ID do quarto inválido.", nameof(quarto_id_fk));
 
-            if (!dto.Preco_total.HasValue)
-                throw new ArgumentException("Preço total é obrigatório.");
+            if (dto.Quantidade_diarias <= 0)
+                throw new ArgumentException("Quantidade de diárias deve ser maior que zero");
 
             if (!dto.Quantidade_hospedes.HasValue)
                 throw new ArgumentException("Quantidade de hóspedes é obrigatória.");
@@ -37,15 +37,21 @@ namespace Hoteis.API.Service
             if (quarto.Status == "Ocupado")
                 throw new InvalidOperationException("Quarto já está ocupado.");
 
+            var dataEntrada = DateTime.Now;
+            var dataSaida = dataEntrada.AddDays(dto.Quantidade_diarias);
+
+            var precoTotal = quarto.Preco_quarto * dto.Quantidade_diarias;
+
             var reserva = new Reserva
             {
                 Quarto_ID_FK = quarto_id_fk,
                 Nome_hospede = dto.Nome_hospede,
                 Contato_hospede = dto.Contato_hospede,
                 Documento_hospede = dto.Documento_hospede,
-                Data_entrada = DateTime.Now,
-                Preco_total = dto.Preco_total.Value,
-                Quantidade_hospedes = dto.Quantidade_hospedes.Value
+                Quantidade_hospedes = dto.Quantidade_hospedes.Value,
+                Data_entrada = dataEntrada,
+                Data_saida = dataSaida,
+                Preco_total = precoTotal
             };
 
             quarto.Status = "Ocupado";
@@ -68,7 +74,6 @@ namespace Hoteis.API.Service
         {
             return await _repository.ListarTodosAsync();
         }
-
         public async Task<Reserva> GetByIdAsync(int id)
         {
             if (id <= 0)
@@ -106,15 +111,7 @@ namespace Hoteis.API.Service
             {
                 AtualizarReserva.Documento_hospede = dto.Documento_hospede;
             }
-            if (dto.Data_entrada.HasValue)
-            {
-                AtualizarReserva.Data_entrada = dto.Data_entrada.Value;
-            }
-            if (dto.Preco_total.HasValue)
-            {
-                AtualizarReserva.Preco_total = dto.Preco_total.Value;
-            }
-            if (dto.Data_entrada.HasValue)
+            if (dto.Quantidade_hospedes.HasValue)
             {
                 AtualizarReserva.Quantidade_hospedes = dto.Quantidade_hospedes.Value;
             }

@@ -21,5 +21,6 @@ namespace Hoteis.API.Model
         [Precision(10, 2)]
         public decimal Preco_total { get; set; }
         public int Quantidade_hospedes { get; set; }
+        public int Quantidade_diarias { get; set; }
     }
 }

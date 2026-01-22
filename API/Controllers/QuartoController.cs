@@ -30,8 +30,7 @@ namespace Hoteis.API.Controller
         [HttpGet("Buscar-todos-os-quartos")]
         public async Task<IEnumerable<Quarto>> ListarQuartos()
         {
-            var lista = await _service.ListarAsync();
-            return lista;
+            return await _service.ListarAsync();
         }
 
         [HttpDelete("exclir-quarto{id}")]

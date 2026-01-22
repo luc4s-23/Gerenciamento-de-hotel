@@ -20,14 +20,14 @@ namespace Hoteis.API.Service
                 throw new ArgumentException("O número do quarto é obrigatório.", nameof(dto.Numero_quarto));
             }
 
-            if (string.IsNullOrWhiteSpace(dto.categoria))
+            if (!Enum.IsDefined(typeof(TipoQuarto), dto.tipo))
             {
-                throw new ArgumentException("A categoria do quarto é obrigatório.", nameof(dto.categoria));
+                throw new ArgumentException("Tipo de quarto inválido.", nameof(dto.tipo));
             }
 
-            if (dto.Preco_quarto <= 0)
+            if (dto.Preco_diaria <= 0)
             {
-                throw new ArgumentException("O preço por noite deve ser maior que zero.", nameof(dto.Preco_quarto));
+                throw new ArgumentException("O preço por noite deve ser maior que zero.", nameof(dto.Preco_diaria));
             }
 
             // Criação da entidade Quarto a partir do DTO
@@ -35,9 +35,9 @@ namespace Hoteis.API.Service
             {
                 // Id seria gerado pelo banco de dados, então não setamos aqui
                 Numero_quarto = dto.Numero_quarto,
-                categoria = dto.categoria,
-                Preco_quarto = dto.Preco_quarto.Value,
+                tipo = dto.tipo,
                 Capacidade = dto.Capacidade.Value,
+                Preco_diaria = dto.Preco_diaria.Value,
                 Descricao = dto.Descricao
             };
             await _repository.AdicionarAsync(quarto);
@@ -88,13 +88,13 @@ namespace Hoteis.API.Service
             {
                 quartoExistente.Numero_quarto = dto.Numero_quarto;
             }
-            if (dto.categoria != null)
+            if (dto.tipo != null)
             {
-                quartoExistente.categoria = dto.categoria;
+                quartoExistente.tipo = dto.tipo;
             }
-            if (dto.Preco_quarto.HasValue) // Para tipos numéricos nullable, como decimal? ou int?
+            if (dto.Preco_diaria.HasValue) // Para tipos numéricos nullable, como decimal? ou int?
             {
-                quartoExistente.Preco_quarto = dto.Preco_quarto.Value;
+                quartoExistente.Preco_diaria = dto.Preco_diaria.Value;
             }
             if (dto.Capacidade.HasValue)
             {

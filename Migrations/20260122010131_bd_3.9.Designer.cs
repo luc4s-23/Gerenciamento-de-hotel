@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hoteis.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251226183139_bd_v3.7")]
-    partial class bd_v37
+    [Migration("20260122010131_bd_3.9")]
+    partial class bd_39
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,16 +43,15 @@ namespace Hoteis.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Preco_quarto")
-                        .HasPrecision(10, 2)
-                        .HasColumnType("decimal(10,2)");
+                    b.Property<decimal>("Preco_diaria")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
-                    b.Property<string>("categoria")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("tipo")
+                        .HasColumnType("int");
 
                     b.HasKey("Id_quarto");
 
@@ -71,10 +70,13 @@ namespace Hoteis.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Data_entrada")
+                    b.Property<DateTime>("DataCheckIn")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("Data_saida")
+                    b.Property<DateTime>("DataCheckOut")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataReserva")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Documento_hospede")
@@ -89,13 +91,25 @@ namespace Hoteis.Migrations
                         .HasPrecision(10, 2)
                         .HasColumnType("decimal(10,2)");
 
+                    b.Property<int>("QuantidadeDiarias")
+                        .HasColumnType("int");
+
                     b.Property<int>("Quantidade_hospedes")
                         .HasColumnType("int");
 
                     b.Property<int>("Quarto_ID_FK")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("ValorTotal")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("status")
+                        .HasColumnType("int");
+
                     b.HasKey("Id_reserva");
+
+                    b.HasIndex("Quarto_ID_FK");
 
                     b.ToTable("reservas");
                 });
@@ -123,6 +137,17 @@ namespace Hoteis.Migrations
                     b.HasKey("Id_Usuario");
 
                     b.ToTable("usuarios");
+                });
+
+            modelBuilder.Entity("Hoteis.API.Model.Reserva", b =>
+                {
+                    b.HasOne("Hoteis.API.Model.Quarto", "Quarto")
+                        .WithMany()
+                        .HasForeignKey("Quarto_ID_FK")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Quarto");
                 });
 #pragma warning restore 612, 618
         }

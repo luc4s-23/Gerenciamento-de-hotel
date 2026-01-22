@@ -5,10 +5,10 @@ namespace Hoteis.API.Service
 {
     public interface IReservaService
     {
-        Task<IEnumerable<Reserva>> GetAllAsync();
-        Task<Reserva> GetByIdAsync(int id);
-        Task<Reserva> CreateAsync(ReservaDTO dto, int Quarto_ID_FK);
-        Task<Reserva> UpdateAsync(int id, ReservaDTO dto);
-        Task DeleteAsync(int id);
+        Task<List<ReservaReadDTO>> BuscarTodosAsync();
+        Task<Reserva> BuscarPorIdAsync(int id);
+        Task<Reserva> ReservarQuartoAsync(ReservaDTO dto, int Quarto_ID_FK);
+        Task<Reserva> AtualizarAsync(int id, ReservaDTO dto);
+        Task DeletePorIdAsync(int id);
     }
 }

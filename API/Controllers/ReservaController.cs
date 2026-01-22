@@ -22,14 +22,14 @@ namespace Hoteis.API.Controllers
             {
                 return BadRequest(ModelState);
             }
-            await _service.CreateAsync(dto, Quarto_ID_FK);
+            await _service.ReservarQuartoAsync(dto, Quarto_ID_FK);
             return Ok(dto);
         }
 
         [HttpGet("Buscar-reservas")]
-        public async Task<IEnumerable<Reserva>> BuscarTodosAsync()
+        public async Task<List<ReservaReadDTO>> BuscarTodosAsync()
         {
-            return await _service.GetAllAsync();
+            return await _service.BuscarTodosAsync();
         }
     }
 }

@@ -10,18 +10,38 @@ namespace Hoteis.API.Model
         [Required]
         public string? Numero_quarto { get; set; }
         [Required]
-        public string? categoria { get; set; }
+        public TipoQuarto tipo { get; set; }
         [Required]
         public int Capacidade { get; set; }
         [Precision(10, 2)]
         [Required]
-        public decimal Preco_quarto { get; set; }
-        public string? Status { get; set; }
-        public string? Descricao { get; set; } 
+        [Range(0.00, double.MaxValue)]
+        public decimal Preco_diaria { get; set; }
+        public StatusQuarto Status { get; private set; } = StatusQuarto.Disponível;
+        public string? Descricao { get; set; }
 
-        public Quarto()
+
+        public void Ocupar()
         {
-            Status = "Disponível";
+            if (Status == StatusQuarto.Ocupado)
+                throw new InvalidOperationException("Quarto já está ocupado.");
+
+            Status = StatusQuarto.Ocupado;
         }
+
     }
+}
+
+public enum StatusQuarto
+{
+    Disponível,
+    Ocupado
+}
+
+public enum TipoQuarto
+{
+    Standard,
+    Luxo,
+    Suite,
+    Presidential
 }

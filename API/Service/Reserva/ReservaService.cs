@@ -15,7 +15,7 @@ namespace Hoteis.API.Service
             _quartoRepository = quartoRepository;
         }
 
-        public async Task<Reserva> CreateAsync(ReservaDTO dto, int quarto_id_fk)
+        public async Task<Reserva> ReservarQuartoAsync(ReservaDTO dto, int quarto_id_fk)
         {
             if (dto == null)
                 throw new ArgumentNullException(nameof(dto));
@@ -23,8 +23,8 @@ namespace Hoteis.API.Service
             if (quarto_id_fk <= 0)
                 throw new ArgumentException("ID do quarto inválido.", nameof(quarto_id_fk));
 
-            if (dto.Quantidade_diarias <= 0)
-                throw new ArgumentException("Quantidade de diárias deve ser maior que zero");
+            if (dto.QuantidadeDiarias <= 0)
+                 throw new ArgumentException("Quantidade de diárias deve ser maior que zero");
 
             if (!dto.Quantidade_hospedes.HasValue)
                 throw new ArgumentException("Quantidade de hóspedes é obrigatória.");
@@ -34,13 +34,10 @@ namespace Hoteis.API.Service
             if (quarto == null)
                 throw new KeyNotFoundException($"Quarto com ID {quarto_id_fk} não encontrado.");
 
-            if (quarto.Status == "Ocupado")
-                throw new InvalidOperationException("Quarto já está ocupado.");
+            //var dataEntrada = DateTime.UtcNow;
+            //var dataSaida = dataEntrada.AddDays(dto.Quantidade_diarias);
 
-            var dataEntrada = DateTime.Now;
-            var dataSaida = dataEntrada.AddDays(dto.Quantidade_diarias);
-
-            var precoTotal = quarto.Preco_quarto * dto.Quantidade_diarias;
+            //var precoTotal = quarto.Preco_diaria * dto.Quantidade_diarias;
 
             var reserva = new Reserva
             {
@@ -48,21 +45,22 @@ namespace Hoteis.API.Service
                 Nome_hospede = dto.Nome_hospede,
                 Contato_hospede = dto.Contato_hospede,
                 Documento_hospede = dto.Documento_hospede,
+                QuantidadeDiarias = dto.QuantidadeDiarias,
                 Quantidade_hospedes = dto.Quantidade_hospedes.Value,
-                Data_entrada = dataEntrada,
-                Data_saida = dataSaida,
-                Preco_total = precoTotal
+                DataCheckIn = DateTime.UtcNow,
+                DataCheckOut = dto.DataCheckIn.AddDays(dto.QuantidadeDiarias),
+                Status = Reserva.StatusReserva.CheckInRealizado,
+                ValorTotal = dto.QuantidadeDiarias * quarto.Preco_diaria
             };
 
-            quarto.Status = "Ocupado";
+            quarto.Ocupar();
 
             await _repository.AdicionarAsync(reserva);
             await _quartoRepository.AtualizarAsync(quarto);
 
             return reserva;
         }
-
-        public async Task DeleteAsync(int id)
+        public async Task DeletePorIdAsync(int id)
         {
             if (id <= 0)
             {
@@ -70,11 +68,11 @@ namespace Hoteis.API.Service
             }
             await _repository.DeletarAsync(id);
         }
-        public async Task<IEnumerable<Reserva>> GetAllAsync()
+        public async Task<List<ReservaReadDTO>> BuscarTodosAsync()
         {
             return await _repository.ListarTodosAsync();
         }
-        public async Task<Reserva> GetByIdAsync(int id)
+        public async Task<Reserva> BuscarPorIdAsync(int id)
         {
             if (id <= 0)
             {
@@ -83,8 +81,7 @@ namespace Hoteis.API.Service
             var reservaPorId = await _repository.BuscarPorIdAsync(id);
             return reservaPorId;
         }
-
-        public async Task<Reserva> UpdateAsync(int id, ReservaDTO dto)
+        public async Task<Reserva> AtualizarAsync(int id, ReservaDTO dto)
         {
             if (id <= 0)
             {

@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace Hoteis.API.Model
 {
     public class Reserva

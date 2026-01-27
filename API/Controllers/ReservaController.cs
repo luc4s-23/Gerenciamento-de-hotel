@@ -31,5 +31,13 @@ namespace Hoteis.API.Controllers
         {
             return await _service.BuscarTodosAsync();
         }
+        [HttpGet("buscar-por-id{id}")]
+        public async Task<IActionResult> BuscarPorIdAsync(int id)
+        {
+            var ReservaID = await _service.BuscarPorIdAsync(id);
+            return Ok(ReservaID);
+        }
+
+
     }
 }

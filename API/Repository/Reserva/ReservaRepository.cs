@@ -19,9 +19,7 @@ namespace Hoteis.API.Repository
             return await _context.reservas
                 .Select(r => new ReservaReadDTO
                 {
-                    IdReserva = r.Id_reserva,
                     NumeroQuarto = r.Quarto.Numero_quarto,
-                    TipoQuarto = r.Quarto.tipo,
                     DataCheckIn = r.DataCheckIn,
                     DataCheckOut = r.DataCheckOut,
                     QuantidadeDiarias = r.QuantidadeDiarias,

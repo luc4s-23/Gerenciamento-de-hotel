@@ -6,7 +6,7 @@ namespace Hoteis.API.Service
     public interface IReservaService
     {
         Task<List<ReservaReadDTO>> BuscarTodosAsync();
-        Task<Reserva> BuscarPorIdAsync(int id);
+        Task<ReservaReadDTO> BuscarPorIdAsync(int id);
         Task<Reserva> ReservarQuartoAsync(ReservaDTO dto, int Quarto_ID_FK);
         Task<Reserva> AtualizarAsync(int id, ReservaDTO dto);
         Task DeletePorIdAsync(int id);

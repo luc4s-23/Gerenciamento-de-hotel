@@ -6,6 +6,7 @@ namespace Hoteis.API.DTO
 {
     public class ReservaDTO
     {
+        public int IdReserva { get; set; }
         [Required]
         public string? Nome_hospede { get; set; }
         [Required]

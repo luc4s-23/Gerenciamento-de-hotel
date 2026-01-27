@@ -1,6 +1,9 @@
 using Hoteis.API.Model;
 using Hoteis.API.DTO;
 using Hoteis.API.Repository;
+using Hoteis.API.Data;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace Hoteis.API.Service
 {
@@ -8,11 +11,13 @@ namespace Hoteis.API.Service
     {
         private readonly IReservaRepository _repository;
         private readonly IQuartoRepository _quartoRepository;
+        private readonly AppDbContext _context;
 
-        public ReservaService(IReservaRepository repository, IQuartoRepository quartoRepository)
+        public ReservaService(IReservaRepository repository, IQuartoRepository quartoRepository, AppDbContext context)
         {
             _repository = repository;
             _quartoRepository = quartoRepository;
+            _context = context;
         }
 
         public async Task<Reserva> ReservarQuartoAsync(ReservaDTO dto, int quarto_id_fk)
@@ -24,7 +29,7 @@ namespace Hoteis.API.Service
                 throw new ArgumentException("ID do quarto inválido.", nameof(quarto_id_fk));
 
             if (dto.QuantidadeDiarias <= 0)
-                 throw new ArgumentException("Quantidade de diárias deve ser maior que zero");
+                throw new ArgumentException("Quantidade de diárias deve ser maior que zero");
 
             if (!dto.Quantidade_hospedes.HasValue)
                 throw new ArgumentException("Quantidade de hóspedes é obrigatória.");
@@ -72,15 +77,22 @@ namespace Hoteis.API.Service
         {
             return await _repository.ListarTodosAsync();
         }
-        public async Task<Reserva> BuscarPorIdAsync(int id)
+        public async Task<ReservaReadDTO?> BuscarPorIdAsync(int id)
         {
-            if (id <= 0)
-            {
-                throw new ArgumentNullException("Reserva não encontrada!", nameof(id));
-            }
-            var reservaPorId = await _repository.BuscarPorIdAsync(id);
-            return reservaPorId;
+            return await _context.reservas
+                .Where(r => r.Id_reserva == id)
+                .Select(r => new ReservaReadDTO
+                {
+                    NumeroQuarto = r.Quarto!.Numero_quarto,
+                    DataCheckIn = r.DataCheckIn,
+                    DataCheckOut = r.DataCheckOut,
+                    QuantidadeDiarias = r.QuantidadeDiarias,
+                    ValorTotal = r.ValorTotal,
+                    Status = r.Status
+                })
+                .FirstOrDefaultAsync();
         }
+
         public async Task<Reserva> AtualizarAsync(int id, ReservaDTO dto)
         {
             if (id <= 0)

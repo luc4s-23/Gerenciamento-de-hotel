@@ -37,7 +37,12 @@ namespace Hoteis.API.Controllers
             var ReservaID = await _service.BuscarPorIdAsync(id);
             return Ok(ReservaID);
         }
-
+        [HttpPut("atualizar-reserva{id}")]
+        public async Task<IActionResult> AtualizarReserva(int Id, ReservaDTO dto)
+        {
+            var AtualizarReserva = await _service.AtualizarAsync(Id, dto);
+            return Ok(AtualizarReserva);
+        }
 
     }
 }

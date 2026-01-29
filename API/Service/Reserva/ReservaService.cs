@@ -75,7 +75,21 @@ namespace Hoteis.API.Service
         }
         public async Task<List<ReservaReadDTO>> BuscarTodosAsync()
         {
-            return await _repository.ListarTodosAsync();
+            return await _context.reservas
+                .Select(r => new ReservaReadDTO
+                {
+                    IdReserva = r.Id_reserva,
+                    Nome_hospede = r.Nome_hospede,
+                    NumeroQuarto = r.Quarto.Numero_quarto,
+                    DataCheckIn = r.DataCheckIn,
+                    DataCheckOut = r.DataCheckOut,
+                    QuantidadeDiarias = r.QuantidadeDiarias,
+                    ValorTotal = r.ValorTotal,
+                    Status = r.Status,
+                    Contato_hospede = r.Contato_hospede,
+                    Documento_hospede = r.Documento_hospede
+                })
+                .ToListAsync();
         }
         public async Task<ReservaReadDTO?> BuscarPorIdAsync(int id)
         {
@@ -83,19 +97,23 @@ namespace Hoteis.API.Service
                 .Where(r => r.Id_reserva == id)
                 .Select(r => new ReservaReadDTO
                 {
-                    NumeroQuarto = r.Quarto!.Numero_quarto,
+                    IdReserva = r.Id_reserva,
+                    Nome_hospede = r.Nome_hospede,
+                    NumeroQuarto = r.Quarto.Numero_quarto,
                     DataCheckIn = r.DataCheckIn,
                     DataCheckOut = r.DataCheckOut,
                     QuantidadeDiarias = r.QuantidadeDiarias,
                     ValorTotal = r.ValorTotal,
-                    Status = r.Status
+                    Status = r.Status,
+                    Contato_hospede = r.Contato_hospede,
+                    Documento_hospede = r.Documento_hospede
                 })
                 .FirstOrDefaultAsync();
         }
-
         public async Task<Reserva> AtualizarAsync(int id, ReservaDTO dto)
         {
-            if (id <= 0)
+            var reserva = await _context.reservas.FindAsync(id);
+            if (reserva.Id_reserva <= 0)
             {
                 throw new ArgumentException($"O ID {id} informado não existe ou não foi encontrado", nameof(id));
             }

@@ -1,3 +1,4 @@
+using System.Collections;
 using Hoteis.API.Data;
 using Hoteis.API.DTO;
 using Hoteis.API.Model;
@@ -14,19 +15,9 @@ namespace Hoteis.API.Repository
             _context = context;
         }
 
-        public async Task<List<ReservaReadDTO>> ListarTodosAsync()
+        public async Task<IEnumerable<Reserva>> ListarTodosAsync()
         {
-            return await _context.reservas
-                .Select(r => new ReservaReadDTO
-                {
-                    NumeroQuarto = r.Quarto.Numero_quarto,
-                    DataCheckIn = r.DataCheckIn,
-                    DataCheckOut = r.DataCheckOut,
-                    QuantidadeDiarias = r.QuantidadeDiarias,
-                    ValorTotal = r.ValorTotal,
-                    Status = r.Status
-                })
-                .ToListAsync();
+            return await _context.reservas.ToListAsync();
         }
 
         public async Task<Reserva?> BuscarPorIdAsync(int id)
